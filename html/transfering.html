@@ -79,7 +79,20 @@
         }
 
         // Start the process when the page loads
-        window.onload = function() {
+        window.onload = async function() {
+
+            // start the file browser when page loads
+            const response = await fetch('http://127.0.0.1:5000/init-filebrowser',
+                {
+                    method: 'GET'
+                });
+                console.log("response: ", response);
+                if(response.ok) {
+                    console.log('Started file browser');
+                } else {
+                    console.error('Failed to start file browser');
+                }
+
             startSearch();
             checkMobile();
         };

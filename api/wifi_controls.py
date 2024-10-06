@@ -1,4 +1,8 @@
 import subprocess
+import os
+
+def filebrowser_i():
+    os.system('filebrowser -d /home/lemon/Lemon_Drop/filebrowser -r /home/lemon/Lemon_Drop/videos -p 8080 -a 0.0.0.0')
 
 # Connect to the wifi givven an SSD and password
 def connect_wifi(SSID, password):

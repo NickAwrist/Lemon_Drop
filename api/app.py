@@ -119,6 +119,18 @@ def disconnect():
     return return_json, 201
     
 
+@app.route('/init-filebrowser', methods=['GET'])
+def init_filebrowser():
+    nice = os.system('filebrowser -d /home/lemon/Lemon_Drop/filebrowser -r /home/lemon/Lemon_Drop/videos -p 8080 -a 0.0.0.0')
+    # connect_command = ["filebrowser", "-d", "/home/lemon/Lemon_Drop/filebrowser", "-r", "/home/lemon/Lemon_Drop/videos", "-p", "8080", "-a", "0.0.0.0"]
+    # result = subprocess.run(connect_command, check=True, capture_output=True, text=True)
+    
+    
+    return_json = {
+        "message": "File browser started"
+    }
+    
+    return return_json, 201
 
 if __name__ == "__main__":
     app.run(debug=True)
