@@ -43,7 +43,7 @@ def connect():
     password = config['connections'][SSID_index]['password']
     
     print('SSID:' + SSID)
-    print('password' + password)
+    print('password: ' + password)
     
     result = connect_wifi(SSID, password)
 

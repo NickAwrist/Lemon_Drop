@@ -1,10 +1,25 @@
 {
     "setup": false,
     "connections": [
-      {"SSID": "Sevsung", "password": "12345678"},
-      {"SSID": "JEREMYDASHCAM", "password": "4b8aydy2"},
-      {"SSID": "VIOFO-A129P-124fc8", "password": "feb63688"},
-      {"SSID": "Shower", "password": "myhome123"},
-      {"SSID": "Nick’s iPhone", "password": "12345678"}
+        {
+            "SSID": "Sevsung",
+            "password": "12345678"
+        },
+        {
+            "SSID": "JEREMYDASHCAM",
+            "password": "4b8aydy2"
+        },
+        {
+            "SSID": "VIOFO-A129P-124fc8",
+            "password": "feb63688"
+        },
+        {
+            "SSID": "Shower",
+            "password": "myhome123"
+        },
+        {
+            "SSID": "Nick\u2019s iPhone",
+            "password": "12345678"
+        }
     ]
-  }
+}
