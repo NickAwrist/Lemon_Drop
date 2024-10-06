@@ -48,7 +48,7 @@ def main():
     password = config['connections'][SSID_index]['password']
     
     print('SSID:' + SSID)
-    print('password' + password)
+    print('password: ' + password)
     
     result = establish_wifi_connection(SSID, password)
     
