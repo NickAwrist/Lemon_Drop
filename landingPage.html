@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/fonts/stylesheet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <title>LemonDrop</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden;
+        }
+        .page {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        #landing-page {
+            background-image: url('/assets/images/saraBackground.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            z-index: 2;
+        }
+        #selection-page {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: -1;
+            background: linear-gradient(45deg, #FFB100, #FFB100, #dfbd00, #BB4430);
+            background-size: 400% 400%;
+            animation: gradientAnimation 4s ease infinite;
+            display: flex;
+            opacity: 0;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: -1;
+        }
+        #selection-page.loaded {
+            opacity: 1;
+            z-index: 2;
+        }
+                #landing-page.unloaded {
+            opacity: 0;
+        }
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        h1 {
+            font-family: 'bp_dietultrablack', sans-serif;
+            font-size: 4.5em;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        h2 {
+            font-family: 'bp_dietultrablack', sans-serif;
+            font-size: 3.5em;
+            margin-bottom: 40px;
+            opacity: 0;
+            color: white;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        .start-button {
+            font-family: 'Roboto', sans-serif;
+            padding: 20px 40px;
+            font-size: 1.4em;
+            background-color: #7a4900;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 0.2s ease-out 0.2s forwards;
+        }
+        .start-button:hover {
+            background-color: #000000;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+        .dashcam-options {
+            display: flex;
+            justify-content: space-around;
+            width: 80%;
+            max-width: 1200px;
+        }
+        .dashcam-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 45%;
+            background: rgb(255, 238, 140);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.1s ease;
+            cursor: pointer;
+        }
+        .dashcam-option:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: rgb(255, 220, 80);
+        }
+        .dashcam-option img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .dashcam-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        #selection-page {
+            opacity: 1;
+            transition: background-color 0.1s ease
+        }
+        
+        .fade-out {
+            opacity: 0 !important;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="animated-background"></div>
+    <div id="landing-page" class="page">
+        <h1>LemonDrop</h1>
+        <button class="start-button" onclick="transitionToSelection()">Let's Start Paring</button>
+    </div>
+    <div id="selection-page" class="page">
+        <h2>Choose Your Dashcam</h2>
+        <div class="dashcam-options">
+            <div class="dashcam-option" onclick="selectDashcam('A')">
+                <img src="/assets/images/dashcam-a.jpg" alt="Dashcam 1">
+                <h3>Dashcam Model A</h3>
+                <p>High-resolution recording with night vision capabilities.</p>
+            </div>
+            <div class="dashcam-option" onclick="selectDashcam('B')">
+                <img src="/assets/images/dashcam-b.jpg" alt="Dashcam 2">
+                <h3>Dashcam Model B</h3>
+                <p>Wi-Fi enabled with real-time streaming to your smartphone.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function transitionToSelection() {
+            const landingPage = document.getElementById('landing-page');
+            const selectionPage = document.getElementById('selection-page');
+            
+            selectionPage.style.opacity = '1';
+            landingPage.style.opacity = '0';
+            
+            setTimeout(() => {
+                landingPage.style.display = 'none';
+                selectionPage.style.zIndex = '2';
+            }, 800);
+        }
+
+        function selectDashcam(model) {
+        const selectionPage = document.getElementById('selection-page');
+        
+        setTimeout(() => {
+            window.location.href = `connections.html?model=${model}`;
+        }, 500);
+    }   
+    </script>
+</body>
+</html>
