@@ -3,27 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="/assets/fonts/stylesheet.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/transfering.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
     <title>LemonDrop - Video Search and Transfer</title>
 </head>
 <body>
-    <div class="page">
-        <div class="container search-container" id="searchContainer">
-            <div class="search-icon">🔍</div>
+    <div class="animated-background"></div>
+    <main class="page">
+        <section class="container search-container" id="searchContainer">
+            <div class="search-icon"><i class="fas fa-search"></i></div>
             <div class="status">Searching for new videos...</div>
-        </div>
-        <div class="container transfer-container hidden" id="transferContainer">
+        </section>
+        <section class="container transfer-container hidden" id="transferContainer">
             <div class="status" id="transferStatus">Transferring files...</div>
             <div class="progress">
                 <div class="progress-inner" id="progressInner"></div>
             </div>
             <div class="progress-text" id="progressText"></div>
-            <button class="start-button" id="startButton" onclick="window.location.href='file-explorer.html'">Play Videos</button>
-        </div>
-    </div>
+            <button class="start-button" id="startButton" onclick="window.location.href='http://192.168.0.103:8080'">View Videos</button>
+        </section>
+    </main>
 
     <script>
         let transferredFiles = 0;
@@ -32,12 +36,12 @@
 
         function startSearch() {
             setTimeout(() => {
-                document.getElementById('searchContainer').style.opacity = '0';
+                document.getElementById('searchContainer').classList.add('fade-out');
                 setTimeout(() => {
                     document.getElementById('searchContainer').classList.add('hidden');
                     document.getElementById('transferContainer').classList.remove('hidden');
                     setTimeout(() => {
-                        document.getElementById('transferContainer').style.opacity = '1';
+                        document.getElementById('transferContainer').classList.add('fade-in');
                         startTransfer();
                     }, 50);
                 }, 500);
@@ -66,8 +70,22 @@
             }
         }
 
+        function checkMobile() {
+            if (window.innerWidth <= 768) {
+                document.body.classList.add('mobile');
+            } else {
+                document.body.classList.remove('mobile');
+            }
+        }
+
         // Start the process when the page loads
-        window.onload = startSearch;
+        window.onload = function() {
+            startSearch();
+            checkMobile();
+        };
+
+        // Run on window resize
+        window.addEventListener('resize', checkMobile);
     </script>
 </body>
 </html>
