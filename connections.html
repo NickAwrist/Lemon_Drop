@@ -6,132 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/fonts/stylesheet.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/connections.css">
 
     <title>LemonDrop - Connecting</title>
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-            overflow: hidden;
-        }
-        .animated-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #FFB100, #BB4430, #dfbd00, #BB4430);
-            background-size: 400% 400%;
-            animation: gradientAnimation 5s ease infinite;
-            z-index: -1;
-        }
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .connection-page {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .connection-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.658);
-            border-radius: 20px;
-            padding: 30px;
-            transition: opacity 0.5s ease-in-out;
-        }
-        .dashcam-image {
-            width: 300px;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .connection-status {
-            text-align: center;
-            color: white;
-        }
-        .wifi-icon {
-            font-size: 48px;
-            color: #4CAF50;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-        h2 {
-            font-family: 'bp_dietultrablack', sans-serif;
-            font-size: 3.5em;
-            margin-bottom: 40px;
-            color: white;
-        }
-        .connected-message {
-            text-align: center;
-            font-size: 24px;
-            color: #ffffff;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-        .progress-bar {
-            width: 300px;
-            height: 4px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 20px;
-        }
-        .progress-bar-inner {
-            width: 100%;
-            height: 100%;
-            background-color: #4CAF50;
-            animation: indeterminateProgress 1.5s infinite linear;
-            transform-origin: 0% 50%;
-        }
-        @keyframes indeterminateProgress {
-            0% { transform:  translateX(0) scaleX(0); }
-            40% { transform:  translateX(0) scaleX(0.4); }
-            100% { transform:  translateX(100%) scaleX(0.5); }
-        }
-
-        
-        .fade-in {
-            opacity: 1 !important;
-        }
-
-        #selection-page, #connection-page {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transition: opacity 0.5s ease-in-out;
-        }
-        
-        #connection-page {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        /* Add styles for connection page elements */
-        .connection-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 30px;
-        }
-    </style>
 </head>
 <body>
     <div class="animated-background"></div>
@@ -149,6 +26,7 @@
         <div class="connected-message">
             <h2>Connected!</h2>
             <p>Your dashcam is now ready to use.</p>
+            <button class="transfer-button" onclick="transitionToTransfer()">Start Transferring Videos</button>
         </div>
     </div>
 
@@ -181,13 +59,17 @@
                 
                 setTimeout(() => {
                     container.style.display = 'none';
-                    connectedMessage.style.opacity = '1';
+                    connectedMessage.classList.add('fade-in');
                 }, 500);
             }, 5000); // Adjust this time as needed for your actual connection process
+        }
+        function transitionToTransfer() {
+                window.location.href = 'transfering.html';
         }
 
         // Start the animation when the page loads
         window.onload = startConnectionAnimation;
+
     </script>
 </body>
 </html>

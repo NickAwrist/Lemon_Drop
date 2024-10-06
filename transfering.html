@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/fonts/stylesheet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/transfering.css">
+
+    <title>LemonDrop - Video Search and Transfer</title>
+</head>
+<body>
+    <div class="page">
+        <div class="container search-container" id="searchContainer">
+            <div class="search-icon">🔍</div>
+            <div class="status">Searching for new videos...</div>
+        </div>
+        <div class="container transfer-container hidden" id="transferContainer">
+            <div class="status" id="transferStatus">Transferring files...</div>
+            <div class="progress">
+                <div class="progress-inner" id="progressInner"></div>
+            </div>
+            <div class="progress-text" id="progressText"></div>
+            <button class="start-button" id="startButton" onclick="window.location.href='file-explorer.html'">Play Videos</button>
+        </div>
+    </div>
+
+    <script>
+        let transferredFiles = 0;
+        let totalFiles = 100; // Replace with actual total number of files
+        let intervalId;
+
+        function startSearch() {
+            setTimeout(() => {
+                document.getElementById('searchContainer').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('searchContainer').classList.add('hidden');
+                    document.getElementById('transferContainer').classList.remove('hidden');
+                    setTimeout(() => {
+                        document.getElementById('transferContainer').style.opacity = '1';
+                        startTransfer();
+                    }, 50);
+                }, 500);
+            }, 3000); // Simulates 3 seconds of searching
+        }
+
+        function startTransfer() {
+            intervalId = setInterval(updateTransferProgress, 100);
+        }
+
+        function updateTransferProgress() {
+            const progressText = document.getElementById('progressText');
+            const progressInner = document.getElementById('progressInner');
+            const startButton = document.getElementById('startButton');
+
+            if (transferredFiles < totalFiles) {
+                transferredFiles += 1;
+                const progress = (transferredFiles / totalFiles) * 100;
+
+                progressInner.style.width = `${progress}%`;
+                progressText.textContent = `${transferredFiles} of ${totalFiles} files transferred`;
+            } else {
+                clearInterval(intervalId);
+                document.getElementById('transferStatus').textContent = 'Transfer complete!';
+                startButton.style.display = 'block';
+            }
+        }
+
+        // Start the process when the page loads
+        window.onload = startSearch;
+    </script>
+</body>
+</html>
