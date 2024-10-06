@@ -2,30 +2,61 @@ import requests
 import os
 import xmltodict
 import downloader.utils.commands as commands
-
+#wget        http://192.168.1.254/DCIM/Movie/20241005224959_023982.MP4
+#            http://192.168.1.254/DCIM/Movie/20231003081810_000197.MP4
 BASE_URL = 'http://192.168.1.254'
 BASE_COMMAND_URL = "http://192.168.1.254/?custom=1&cmd="
 
-
-def get_battery_level():
-    response = requests.get(BASE_COMMAND_URL + str(commands.GET_BATTERY_LEVEL))
+# This will always return an XML response object
+def request_command(command):
+    response = requests.get(BASE_COMMAND_URL + str(command))
     if(response.content == None):
-        print('Error ' + str(response.status_code))
-        exit(1)
-                
-    parsed_response = xmltodict.parse(response.content)
-    battery_level = parsed_response['Function']['Value']
+        print( 'Error Status: '+ str(response.status_code))
+        print('\n')
+        exit()
+    return response
 
-    return battery_level    
+def request_movie(movie_name):
+    full_url = BASE_URL + "/DCIM/Movie/" + str(movie_name)
+    print(full_url)
+    
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0'
+    }
+    
+    response = requests.get(full_url, headers=headers)
+    
+    if response.status_code != 200:
+        print('Error Status: ' + str(response.status_code))
+        print('Failed to retrieve movie: ' + str(movie_name))
+        exit()
+    
+    return response
 
 
+def beep():
+    # beep 10 times
+    for i in range(10):
+        b = request_command(commands.BEEP)
+        print(xmltodict.parse(b.content))
+        
+def get_card_free_space():
+    response =  request_command(commands.CARD_FREE_SPACE)
+    return int(xmltodict.parse(response.content)["Function"]["Value"])/1000
+        
+# get list of all file names
+def get_file_list():
+    request =  request_command(commands.GET_FILE_LIST)
+    file_list = xmltodict.parse(request.content)["LIST"]["ALLFile"]
+    return file_list
+    
+def get_one_video(video_name):
+    response = request_movie(video_name)
+    return response.content
+          
 def get_all_videos():
     # get the list of all the file names needing to be downloaded
-    response = requests.get(BASE_COMMAND_URL + str(commands.GET_FILE_LIST))
-    if(response.content == None):
-        print('Error: ' + str(response.status_code))
-        exit()
-    # print(response.headers)
+    response = request_command(commands.GET_FILE_LIST)
 
     file_names = xmltodict.parse(response.content)
 
@@ -39,9 +70,19 @@ def get_all_videos():
         
         if(os.path.exists(os.getcwd() + '/videos') == False):
             os.mkdir(os.getcwd() + '/videos')
+          
+            
+        video_response = request_movie(videoname)
         
-        with open(('videos/' + str(videoname)), 'wb') as video_file:
-            video_file.write(response.content)
+        # print(video_response)
+
         
-        i += 1
+        # if video_response.status_code == 200:  
+        #     with open(('videos/' + str(videoname)), 'wb') as video_file:
+        #         video_file.write(video_response.content) 
+        # else:
+        #     print(f"Failed to download video: {videoname}")
+        
+        
+        # i += 1
         

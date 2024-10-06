@@ -1,4 +1,4 @@
-from downloader.utils.wifi_connection import *
+from downloader.utils.wifi_controls import *
 from downloader.camera_controls import *
 import json
 import os
@@ -20,20 +20,8 @@ def load_config():
     else:
         print("Error: config.json file not found")
         exit(1)
-                    
-def main():
-    
-    
-    print(f"Here are the current connections:")
-    currently_connected = check_wifi_connection()
-    if currently_connected is False:
-        print("No active connections")
-    else:
-        print("Would you like to disconnect from the current connection? (y/n)")
-        response = input()
-        if response.lower() == 'y':
-            disconnect_wifi()
-    
+             
+def connect():
     print("Making a new connection")
     config = load_config()
     print(f"Which connection would you like to make? (Number on the left)")
@@ -58,19 +46,30 @@ def main():
     print('password' + password)
     
     result = connect_wifi(SSID, password)
-    
+
     while result is False:
         print("Attempting to connect again in 15 seconds")
         sleep(15)
-        result = establish_wifi_connection(SSID, password)
-     
+        result = connect_wifi(SSID, password)
+                    
+def main():
     
-    battery_level = get_battery_level()
-    print(f"{battery_level}") 
-        
-    #print("Fetching videos")
-    # get_videos()
-    
+    currently_connected = check_wifi_connection()
+    if currently_connected is False:
+        print("No active connections")
+        connect()
+    else:
+        print("Would you like to disconnect from the current connection? (y/n)")
+        response = input()
+        if response.lower() == 'y':
+            disconnect_wifi()
+            
+        else:
+            file_name = get_file_list()[1]["File"]["NAME"]
+            print(file_name)
+            #print(get_card_free_space())
+            get_all_videos()
+
     
 if __name__ == "__main__":
     main()

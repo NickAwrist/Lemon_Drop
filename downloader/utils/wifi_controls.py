@@ -1,41 +1,46 @@
 import subprocess
 
-SSID2 = "JEREMYDASHCAM"
-password2 = "4b8aydy2"
-
-SSID3 = "VIOFO-A129P-124fc8"
-password3 = "feb63688"
-
+# Connect to the wifi givven an SSD and password
 def connect_wifi(SSID, password):
     try:
+        # Use nmcli to connect to the Wi-Fi network
         print(f"Connecting to {SSID}")
+        
         connect_command = ["sudo", "nmcli", "dev", "wifi", "connect", SSID, "password", password]
         result = subprocess.run(connect_command, check=True, capture_output=True, text=True)
+        
         print(f"Successfully connected to {SSID}")
         print(result.stdout)
         return True
+    
     except subprocess.CalledProcessError as e:
         print(f"Failed to connect to {SSID}")
         print(e.stderr)
+        
         return False
     
+# Disconnect from the wifi
 def disconnect_wifi():
     try:
+        # Use nmcli to disconnect from the Wi-Fi network
         disconnect_command = ["sudo", "nmcli", "dev", "disconnect", "wlan0"]
         result = subprocess.run(disconnect_command, check=True, capture_output=True, text=True)
+       
         print("Wi-Fi disconnected successfully")
         print(result.stdout)
+        
     except subprocess.CalledProcessError as e:
         print("Failed to disconnect Wi-Fi")
         print(e.stderr)
-        
+     
+# Check if the wifi is connected   
 def check_wifi_connection():
     try:
-        # Use nmcli to check the status of wlan0
+        # Use nmcli to check the connection status of wlan0
         connection_command = ["nmcli", "-t", "-f", "DEVICE,STATE", "dev"]
         result = subprocess.run(connection_command, capture_output=True, text=True, check=True)
         
-        # Look for wlan0 in the output
+        # Check the output of the command to see if wlan0 is connected or not
         for line in result.stdout.splitlines():
             if "wlan0:connected" in line:
                 print("wlan0 is connected to a Wi-Fi network")
