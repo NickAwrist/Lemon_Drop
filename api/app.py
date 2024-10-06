@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, Response
 import os
 import json
+from wifi_controls import connect_wifi, disconnect_wifi
 
 app = Flask(__name__)
 
@@ -84,7 +85,37 @@ def delete_connection():
     return (return_json)
     
     
+@app.route('/connect', methods=['POST'])
+def connect():
+    data = request.get_json()
+    
+    ssid = data['SSID']
+    password = data['password']
+    
+    if(not connect_wifi(ssid, password)):
+        return_json = {
+            "error": "Connection failed"
+        }
+        return return_json, 400
+    
+    return_json = {
+        "message": "Connected to ${ssid}"
+    }
+    
+    return return_json, 201
+    
 
+@app.route('/disconnect', methods=['POST'])
+def disconnect():
+    
+    disconnect_wifi()
+    
+    return_json = {
+        "message": "Ended connection"
+    }
+    
+    return return_json, 201
+    
 
 
 if __name__ == "__main__":
