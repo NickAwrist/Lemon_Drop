@@ -61,8 +61,53 @@
             }
         }
 
+        var model = null;
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            model = urlParams.get('model');
+        });
+
         // Run on page load
-        window.onload = function() {
+        window.onload = async function() {
+            if(model == 'A') {
+                const response = await fetch('http://127.0.0.1:5000/connect',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify({
+                        "SSID": "JEREMYDASHCAM",
+                        "password": "4b8aydy2"
+                    })
+                });
+                console.log("response: ", response);
+                if(response.ok) {
+                    console.log('Connected to Dashcam A');
+                } else {
+                    console.error('Failed to connect to Dashcam A');
+                    window.location.href = 'landingPage.html';
+                }
+            }
+            else if(model == 'B') {
+                const response = await fetch('http://127.0.0.1:5000/connect',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ "SSID": "VIOFO-A129P-124fc8", "password": "feb63688" })
+                });
+                
+                console.log("response2: ", response);
+                if(response.ok) {
+                    console.log('Connected to Dashcam b');
+                } else {
+                    console.error('Failed to connect to Dashcam b');
+                    window.location.href = 'landingPage.html';
+                }
+            }
+            
             startConnectionAnimation();
             checkMobile();
         };

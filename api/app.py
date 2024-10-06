@@ -2,8 +2,10 @@ from flask import Flask, request, jsonify, Response
 import os
 import json
 from wifi_controls import connect_wifi, disconnect_wifi
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/add-connection', methods=['POST'])
 def add_connection():
