@@ -2,7 +2,6 @@ from downloader.utils.wifi_controls import *
 from downloader.camera_controls import *
 import json
 import os
-
 from time import sleep
 
 config_path = "config.json"
@@ -20,33 +19,23 @@ def load_config():
     else:
         print("Error: config.json file not found")
         exit(1)
-             
+            
+# Connect to the first saved connection. If no connection is made, keeo trying.
+# Our program only runs when there is a connection or an API endpoint is called (which needs a connection :O)
 def connect():
-    print("Making a new connection")
+    
+    # Load config
     config = load_config()
-    print(f"Which connection would you like to make? (Number on the left)")
-    
-    c=1
-    for connection in config['connections']:
-        print(f"{c}: {connection['SSID']}")
-        c+=1
-    
-    print(f"{c}: Exit")
-    
-    SSID_index = int(input())-1
-    
-    if SSID_index == len(config['connections']):
-        print("Exiting")
-        exit(0)
-    
+
+    # Grab the first connection key value pair
+    SSID_index = 0
     SSID = config['connections'][SSID_index]['SSID']
     password = config['connections'][SSID_index]['password']
     
-    print('SSID:' + SSID)
-    print('password: ' + password)
-    
+    # Connect to the wifi
     result = connect_wifi(SSID, password)
 
+    # If no connection is present, keep retryinh
     while result is False:
         print("Attempting to connect again in 15 seconds")
         sleep(15)
@@ -54,19 +43,19 @@ def connect():
                     
 def main():
     
-    currently_connected = check_wifi_connection()
-    if currently_connected is False:
-        print("No active connections")
-        connect()
-    else:
-        print("Would you like to disconnect from the current connection? (y/n)")
-        response = input()
-        if response.lower() == 'y':
-            disconnect_wifi()
-            
-        else:
-            get_all_videos(limit=10)
-
+    # Search for a webcam connection
+    connect()
+    
+    # Once a connection is established, retrieve the 15 most recent videos
+    get_all_videos(limit=15)
+    
+    disconnect_wifi()
+    
+    # Wait 5 minutes
+    sleep(5*60)
+    
+    # Cyrcle
+    main()
     
 if __name__ == "__main__":
     main()
