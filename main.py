@@ -1,20 +1,9 @@
-from downloader.utils.wifi_connection import establish_wifi_connection
+from downloader.utils.wifi_controls import *
 from downloader.camera_controls import *
 import json
 import os
 
 from time import sleep
-
-# config = {
-#     "setup" : False,
-    
-#     "connections" : [
-        
-#         {"SSID":"Sevsung", "password":"12345678"},
-#         {"SSID":"JEREMYDASHCAM", "password":"4b8aydy2"},
-#         {"SSID":"VIOFO-A129P-124fc8", "password":"feb63688"}
-#     ]
-# }
 
 config_path = "config.json"
 
@@ -31,9 +20,9 @@ def load_config():
     else:
         print("Error: config.json file not found")
         exit(1)
-                    
-def main():
-    
+             
+def connect():
+    print("Making a new connection")
     config = load_config()
     print(f"Which connection would you like to make? (Number on the left)")
     
@@ -41,8 +30,14 @@ def main():
     for connection in config['connections']:
         print(f"{c}: {connection['SSID']}")
         c+=1
-        
+    
+    print(f"{c}: Exit")
+    
     SSID_index = int(input())-1
+    
+    if SSID_index == len(config['connections']):
+        print("Exiting")
+        exit(0)
     
     SSID = config['connections'][SSID_index]['SSID']
     password = config['connections'][SSID_index]['password']
@@ -50,20 +45,28 @@ def main():
     print('SSID:' + SSID)
     print('password' + password)
     
-    result = establish_wifi_connection(SSID, password)
-    
+    result = connect_wifi(SSID, password)
+
     while result is False:
         print("Attempting to connect again in 15 seconds")
         sleep(15)
-        result = establish_wifi_connection(SSID, password)
-     
+        result = connect_wifi(SSID, password)
+                    
+def main():
     
-    battery_level = get_battery_level()
-    print(f"{battery_level}") 
-        
-    #print("Fetching videos")
-    # get_videos()
-    
+    currently_connected = check_wifi_connection()
+    if currently_connected is False:
+        print("No active connections")
+        connect()
+    else:
+        print("Would you like to disconnect from the current connection? (y/n)")
+        response = input()
+        if response.lower() == 'y':
+            disconnect_wifi()
+            
+        else:
+            get_all_videos(limit=10)
+
     
 if __name__ == "__main__":
     main()
