@@ -14,7 +14,7 @@
         <section id="landing-page" class="page">
             <div class="content">
                 <h1 class="fade-in-text">LemonDrop</h1>
-                <button class="start-button fade-in-text" onclick="transitionToSelection()">Let's Start Pairing</button>
+                <button class="start-button fade-in-text" onclick="goToSelection()">Let's Start Pairing</button>
             </div>
         </section>
         <section id="selection-page" class="page">
@@ -37,26 +37,13 @@
     </main>
 
     <script>
-        function transitionToSelection() {
-            const landingPage = document.getElementById('landing-page');
-            const selectionPage = document.getElementById('selection-page');
-            
-            landingPage.classList.add('fade-out');
-            selectionPage.classList.add('fade-in');
-            
-            setTimeout(() => {
-                landingPage.style.display = 'none';
-                selectionPage.style.display = 'flex';
-            }, 500);
+        function goToSelection() {
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('selection-page').style.display = 'flex';
         }
 
         function selectDashcam(model) {
-            const selectionPage = document.getElementById('selection-page');
-            selectionPage.classList.add('fade-out');
-            
-            setTimeout(() => {
-                window.location.href = `connections.html?model=${model}`;
-            }, 500);
+            window.location.href = `connections.html?model=${model}`;
         }
 
         // Check for mobile devices and adjust layout if necessary
