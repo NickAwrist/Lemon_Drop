@@ -65,10 +65,7 @@ def main():
             disconnect_wifi()
             
         else:
-            file_name = get_file_list()[1]["File"]["NAME"]
-            print(file_name)
-            #print(get_card_free_space())
-            get_all_videos()
+            get_all_videos(limit=10)
 
     
 if __name__ == "__main__":
