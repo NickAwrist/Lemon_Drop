@@ -17,14 +17,8 @@ def request_command(command):
     return response
 
 def request_movie(movie_name):
-    full_url = BASE_URL + "/DCIM/Movie/" + str(movie_name)
-    print(full_url)
     
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0'
-    }
-    
-    response = requests.get(full_url, headers=headers)
+    response = requests.get(BASE_URL + '/DCIM/Movie/' + movie_name, allow_redirects=True)
     
     if response.status_code != 200:
         print('Error Status: ' + str(response.status_code))
@@ -74,15 +68,15 @@ def get_all_videos():
             
         video_response = request_movie(videoname)
         
-        # print(video_response)
+        print(video_response)
 
         
-        # if video_response.status_code == 200:  
-        #     with open(('videos/' + str(videoname)), 'wb') as video_file:
-        #         video_file.write(video_response.content) 
-        # else:
-        #     print(f"Failed to download video: {videoname}")
+        if video_response.status_code == 200:  
+            with open(('videos/' + str(videoname)), 'wb') as video_file:
+                video_file.write(video_response.content) 
+        else:
+            print(f"Failed to download video: {videoname}")
         
         
-        # i += 1
+        i += 1
         
