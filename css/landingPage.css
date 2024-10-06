@@ -1,0 +1,140 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden;
+}
+.page {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 1s ease-in-out;
+}
+#landing-page {
+    background-image: url('/assets/images/saraBackground.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    z-index: 2;
+}
+#selection-page {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: -1;
+    background: linear-gradient(45deg, #FFB100, #BB4430, #dfbd00, #BB4430);
+    background-size: 400% 400%;
+    animation: gradientAnimation 4s ease infinite;
+    display: flex;
+    opacity: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+}
+#selection-page.loaded {
+    opacity: 1;
+    z-index: 2;
+}
+        #landing-page.unloaded {
+    opacity: 0;
+}
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+h1 {
+    font-family: 'bp_dietultrablack', sans-serif;
+    font-size: 4.5em;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+h2 {
+    font-family: 'bp_dietultrablack', sans-serif;
+    font-size: 3.5em;
+    margin-bottom: 40px;
+    opacity: 0;
+    color: white;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+.start-button {
+    font-family: 'Roboto', sans-serif;
+    padding: 20px 40px;
+    font-size: 1.4em;
+    background-color: #7a4900;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 0.2s ease-out 0.2s forwards;
+}
+.start-button:hover {
+    background-color: #000000;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+}
+.dashcam-options {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    max-width: 1200px;
+}
+.dashcam-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    background: rgb(255, 238, 140);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.1s ease;
+    cursor: pointer;
+}
+.dashcam-option:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    background: rgb(255, 220, 80);
+}
+.dashcam-option img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+.dashcam-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+#selection-page {
+    opacity: 1;
+    transition: background-color 0.1s ease
+}
+
+.fade-out {
+    opacity: 0 !important;
+}

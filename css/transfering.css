@@ -1,0 +1,113 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden;
+    background: linear-gradient(45deg, #FFB100, #BB4430, #dfbd00, #BB4430);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+}
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.page {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.616);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.521), 0 1px 3px rgba(0, 0, 0, 0.315);
+    transition: all 0.3s ease;
+}
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+.status {
+    text-align: center;
+    color: white;
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+.progress {
+    width: 100%;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 20px;
+    position: relative;
+}
+.progress-inner {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50, #00eb08);            
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+.progress-text {
+    text-align: center;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 15px;
+    font-weight: 400;
+}
+.start-button {
+    font-family: 'Roboto', sans-serif;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: none;
+    margin-top: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.start-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.search-container {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+.transfer-container {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.hidden {
+    display: none;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+.search-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+}
