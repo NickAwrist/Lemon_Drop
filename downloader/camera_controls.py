@@ -40,7 +40,7 @@ def get_file_list():
     request = request_command(commands.GET_FILE_LIST)
     file_list = xmltodict.parse(request.content)["LIST"]["ALLFile"]
     return file_list
-ß
+
 def get_all_videos(limit=None):
     file_list = get_file_list()
     
