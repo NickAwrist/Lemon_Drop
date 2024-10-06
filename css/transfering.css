@@ -3,10 +3,20 @@ body, html {
     margin: 0;
     font-family: 'Roboto', sans-serif;
     overflow: hidden;
+}
+
+.animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: linear-gradient(45deg, #FFB100, #BB4430, #dfbd00, #BB4430);
     background-size: 400% 400%;
     animation: gradientAnimation 15s ease infinite;
+    z-index: -1;
 }
+
 @keyframes gradientAnimation {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -19,7 +29,10 @@ body, html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
+
 .container {
     display: flex;
     flex-direction: column;
@@ -28,22 +41,20 @@ body, html {
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 40px;
-    width: 80%;
+    width: 100%;
     max-width: 500px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.521), 0 1px 3px rgba(0, 0, 0, 0.315);
     transition: all 0.3s ease;
 }
-.container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
-}
+
 .status {
     text-align: center;
     color: white;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 300;
     margin-bottom: 30px;
 }
+
 .progress {
     width: 100%;
     height: 8px;
@@ -53,6 +64,7 @@ body, html {
     margin-top: 20px;
     position: relative;
 }
+
 .progress-inner {
     width: 0;
     height: 100%;
@@ -60,6 +72,7 @@ body, html {
     border-radius: 4px;
     transition: width 0.3s ease;
 }
+
 .progress-text {
     text-align: center;
     font-size: 16px;
@@ -67,6 +80,7 @@ body, html {
     margin-top: 15px;
     font-weight: 400;
 }
+
 .start-button {
     font-family: 'Roboto', sans-serif;
     padding: 15px 30px;
@@ -83,20 +97,18 @@ body, html {
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+
 .start-button:hover {
     background-color: #45a049;
     transform: scale(1.05);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 
-.search-container {
+.search-container, .transfer-container {
     opacity: 1;
     transition: opacity 0.5s ease;
 }
-.transfer-container {
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
+
 .hidden {
     display: none;
 }
@@ -106,8 +118,58 @@ body, html {
     50% { transform: scale(1.1); }
     100% { transform: scale(1); }
 }
+
 .search-icon {
     font-size: 48px;
     margin-bottom: 20px;
     animation: pulse 2s infinite;
+    color: #4CAF50;
+}
+
+.fade-in {
+    opacity: 1 !important;
+}
+
+.fade-out {
+    opacity: 0 !important;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 30px;
+    }
+
+    .status {
+        font-size: 20px;
+    }
+
+    .start-button {
+        padding: 12px 24px;
+        font-size: 1.1em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+
+    .status {
+        font-size: 18px;
+    }
+
+    .start-button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    .search-icon {
+        font-size: 36px;
+    }
+}
+
+/* Styles for mobile devices */
+body.mobile .container {
+    width: 90%;
 }

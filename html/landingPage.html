@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/fonts/stylesheet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/landingPage.css">
+    <title>LemonDrop</title>
+</head>
+<body>
+    <div class="gradient-overlay"></div>
+    <main>
+        <section id="landing-page" class="page">
+            <div class="content">
+                <h1 class="fade-in-text">LemonDrop</h1>
+                <button class="start-button fade-in-text" onclick="transitionToSelection()">Let's Start Pairing</button>
+            </div>
+        </section>
+        <section id="selection-page" class="page">
+            <div class="content">
+                <h2>Choose Your Dashcam</h2>
+                <div class="dashcam-options">
+                    <div class="dashcam-option" onclick="selectDashcam('A')">
+                        <img src="/assets/images/dashcam-a.jpg" alt="VIOFO A119 Mini 2" class="dashcam-image">
+                        <h3>VIOFO A119 Mini 2</h3>
+                        <p>A119 Mini 2 has a rather mini design, making it much easier to hide behind or next to the rear-view mirror. The concealed installation design won't obstruct your sight.</p>
+                    </div>
+                    <div class="dashcam-option" onclick="selectDashcam('B')">
+                        <img src="/assets/images/dashcam-b.jpg" alt="VIOFO A129 Pro 4K" class="dashcam-image">
+                        <h3>VIOFO A129 Pro 4K</h3>
+                        <p>4K Dash cam offer amazing video quality, four time higher than a regular FHD. Help you read most details from street signs, license plate etc. Give you peace of mind when you're driving.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function transitionToSelection() {
+            const landingPage = document.getElementById('landing-page');
+            const selectionPage = document.getElementById('selection-page');
+            
+            landingPage.classList.add('fade-out');
+            selectionPage.classList.add('fade-in');
+            
+            setTimeout(() => {
+                landingPage.style.display = 'none';
+                selectionPage.style.display = 'flex';
+            }, 500);
+        }
+
+        function selectDashcam(model) {
+            const selectionPage = document.getElementById('selection-page');
+            selectionPage.classList.add('fade-out');
+            
+            setTimeout(() => {
+                window.location.href = `connections.html?model=${model}`;
+            }, 500);
+        }
+
+        // Check for mobile devices and adjust layout if necessary
+        function checkMobile() {
+            if (window.innerWidth <= 768) {
+                document.body.classList.add('mobile');
+            } else {
+                document.body.classList.remove('mobile');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+                setTimeout(() => {
+                    document.querySelectorAll('.fade-in-text').forEach(el => {
+                        el.classList.add('visible');
+                    });
+                }, 1000); // Delay text fade in
+            }, 500); // Slight delay before animation starts
+        });
+
+        // Run on page load and window resize
+        window.addEventListener('load', checkMobile);
+        window.addEventListener('resize', checkMobile);
+    </script>
+</body>
+</html>
